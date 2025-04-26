@@ -3,19 +3,14 @@
 use sea_orm::entity::prelude::*;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "profile")]
+#[sea_orm(table_name = "media")]
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false)]
     pub id: Uuid,
-    pub parent_id: Option<Uuid>,
-    #[sea_orm(unique)]
-    pub email: String,
-    pub password: Option<String>,
-    pub phone: Option<String>,
-    pub name: String,
-    pub avatar: Option<String>,
-    pub pin: Option<String>,
-    pub use_pin: Option<bool>,
+    pub library_id: Uuid,
+    pub title: String,
+    pub file_path: String,
+    pub media_type: String,
     pub created_at: DateTime,
     pub updated_at: DateTime,
 }
@@ -25,13 +20,15 @@ pub enum Relation {
     #[sea_orm(has_many = "super::history::Entity")]
     History,
     #[sea_orm(
-        belongs_to = "Entity",
-        from = "Column::ParentId",
-        to = "Column::Id",
+        belongs_to = "super::library::Entity",
+        from = "Column::LibraryId",
+        to = "super::library::Column::Id",
         on_update = "NoAction",
-        on_delete = "SetNull"
+        on_delete = "Cascade"
     )]
-    SelfRef,
+    Library,
+    #[sea_orm(has_many = "super::media_metadata::Entity")]
+    MediaMetadata,
     #[sea_orm(has_many = "super::user_activity::Entity")]
     UserActivity,
 }
@@ -39,6 +36,18 @@ pub enum Relation {
 impl Related<super::history::Entity> for Entity {
     fn to() -> RelationDef {
         Relation::History.def()
+    }
+}
+
+impl Related<super::library::Entity> for Entity {
+    fn to() -> RelationDef {
+        Relation::Library.def()
+    }
+}
+
+impl Related<super::media_metadata::Entity> for Entity {
+    fn to() -> RelationDef {
+        Relation::MediaMetadata.def()
     }
 }
 
