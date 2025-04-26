@@ -36,3 +36,17 @@ pub struct AuthResponse {
     pub token_type: String,
     pub scope: String,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct RegisterResponse {
+    pub id: String,
+    pub parent_id: Option<String>,
+    pub email: String,
+    pub phone: Option<String>,
+    pub name: String,
+    pub avatar: Option<String>,
+    pub pin: Option<String>,
+    pub use_pin: Option<bool>,
+    pub created_at: String,
+    pub updated_at: String,
+}

@@ -2499,6 +2499,7 @@ dependencies = [
  "axum",
  "bcrypt",
  "chrono",
+ "dotenvy",
  "entity",
  "jsonwebtoken",
  "migration",
