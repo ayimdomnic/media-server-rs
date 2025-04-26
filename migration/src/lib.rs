@@ -7,6 +7,7 @@ pub mod m20250426_151732_create_history_table;
 pub mod m20250426_152510_create_media_metadata;
 pub mod m20250426_152523_create_user_activities;
 mod m20250426_153350_create_foreign_keys_migration;
+mod m20250426_155425_create_peers_table;
 
 pub struct Migrator;
 
@@ -21,6 +22,7 @@ impl MigratorTrait for Migrator {
             Box::new(m20250426_152510_create_media_metadata::Migration),
             Box::new(m20250426_152523_create_user_activities::Migration),
             Box::new(m20250426_153350_create_foreign_keys_migration::Migration),
+            Box::new(m20250426_155425_create_peers_table::Migration),
         ]
     }
 }

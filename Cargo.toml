@@ -8,8 +8,8 @@ members = [".", "entity", "migration"]
 
 
 [dependencies]
-entity = { path = "entity" }
-migration = { path = "migration" }
+entity = { path = "./entity" }
+migration = { path = "./migration" }
 axum = "0.8.3"
 mime_guess = "2.0.5"
 sea-orm = { version = "1.1.10", features = ["sqlx-postgres", "runtime-tokio-rustls", "macros", "with-json", "with-uuid"]}
@@ -20,3 +20,5 @@ tokio = "1.44.2"
 tokio-util = "0.7.15"
 tower = "0.5.2"
 uuid = "1.16.0"
+jsonwebtoken = "9.3.1"
+bcrypt = "0.17.0"
