@@ -26,6 +26,9 @@ pub enum AppError {
 
     #[error("Internal server error: {0}")]
     InternalServerError(String),
+
+    #[error("Bad request: {0}")]
+    BadRequest(String),
 }
 
 impl axum::response::IntoResponse for AppError {
@@ -45,6 +48,7 @@ impl axum::response::IntoResponse for AppError {
                 "Not authorized to perform this action".to_string(),
             ),
             AppError::NotFound => (StatusCode::NOT_FOUND, "Resource not found".to_string()),
+            AppError::BadRequest(message) => (StatusCode::BAD_REQUEST, message),
             AppError::InvalidPayload(e) => (
                 StatusCode::BAD_REQUEST,
                 format!("Invalid request payload: {}", e),

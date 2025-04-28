@@ -1,12 +1,13 @@
 pub mod auth;
 pub mod errors;
+pub mod media;
 pub mod routes;
 pub mod state;
 
 use crate::state::AppState;
+use axum::Router;
 use axum::response::Html;
 use axum::routing::get;
-use axum::Router;
 use dotenvy::dotenv;
 use sea_orm::{ConnectOptions, Database};
 use std::env;
@@ -50,12 +51,12 @@ async fn main() {
     };
 
     // Initialize the routes
-    let auth_routes = routes::auth_routes(state.clone()); // Clone the state for use in auth_routes
+    let auth_routes = routes::auth_routes(state.clone());
 
     // Create the main router with the /v1 prefix for the auth routes
     let app = Router::new()
-        .route("/", get(index)) // Add the index route
-        .nest("/v1/auth", auth_routes); // Nest the auth routes under /v1/auth
+        .route("/", get(index))
+        .nest("/v1/auth", auth_routes);
 
     // Define the server address
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000)); // Listen on 0.0.0.0:3000
@@ -70,5 +71,5 @@ async fn main() {
 }
 
 async fn index() -> Html<&'static str> {
-    Html("<h1>Welcome to Smart Inis Media API</h1><p>API Version: v1</p>")
+    Html("<h1>Welcome to Smartinis Media API</h1><p>API Version: v1</p>")
 }
